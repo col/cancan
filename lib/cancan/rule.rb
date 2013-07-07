@@ -110,6 +110,7 @@ module CanCan
               model_adapter(subject).matches_condition? subject, name, value
             else
               attribute = subject.send(name)
+              attribute = attribute.to_a if attribute.is_a? ActiveRecord::Associations::CollectionProxy
               if value.kind_of?(Hash)
                 if attribute.kind_of? Array
                   attribute.any? { |element| matches_conditions_hash? element, value }
